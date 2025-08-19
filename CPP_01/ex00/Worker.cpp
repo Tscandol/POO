@@ -30,7 +30,7 @@ void Worker::addTool(Tool & t) {
         prev->removeTool(t);
     }
     _tools.push_back(&t);
-    t._holder = this; // friend access
+    t.attachTo(this); // use public API instead of friend access
     std::cout << "[Worker] outil ajouté\n";
 }
 
@@ -38,7 +38,7 @@ void Worker::removeTool(Tool & t) {
     for (std::vector<Tool*>::iterator it=_tools.begin(); it!=_tools.end(); ++it) {
         if (*it == &t) {
             std::cout << "[Worker] outil retiré\n";
-            if (t.getHolder() == this) t._holder = 0;
+            if (t.getHolder() == this) t.detachHolder();
             _tools.erase(it);
             return;
         }

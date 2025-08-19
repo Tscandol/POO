@@ -25,7 +25,14 @@ public:
 
     void detachHolder() { _holder = 0; }
 
-    friend class Worker; // Worker gère _holder pour transferts
+    void attachTo(Worker* w) {
+        if (_holder == w) {
+            std::cout << "[Tool] déjà attaché au même Worker\n";
+            return;
+        }
+        _holder = w;
+        std::cout << "[Tool] attaché à un Worker\n";
+    }
 };
 
 #endif // TOOL_HPP
